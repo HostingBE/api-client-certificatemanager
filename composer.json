@@ -1,0 +1,37 @@
+{
+    "name": "hostingbe/api-client-certificatemanager",
+    "description": "php API REST client to connect to CertificateManager.net API, including logging and retry functionality. CertificateManager supplies you with more than 100 certificates and SSL tools to offer to your clients",
+    "keywords": ["php api", "certificate manager api","rest api","ssl certificates API","info ipaddress"],
+    "license": "MIT",
+    "support": {
+        "issues": "https://github.com/HostingBE/api-client-certificatemanager/issues",
+        "source": "https://github.com/HostingBE/api-client-certificatemanager"
+    },
+    "authors": [
+        {
+            "name": "Constan van Suchtelen van de Haere",
+            "email": "constan.vansuchtelenvandehaere@hostingbe.com",
+            "homepage": "https://www.hostingbe.com",
+            "role": "Developer"
+        }
+    ],
+
+    "require": {
+        "php": ">=8.2",
+        "guzzlehttp/guzzle":"^7.9.2",
+        "monolog/monolog":"^3.7.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8"
+    },
+    "autoload": {
+        "psr-4": {
+            "HostingBE\\APIClientCertificateManager\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "HostingBE\\Tests\\": "tests/"
+        }
+    }
+}
