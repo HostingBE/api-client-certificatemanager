@@ -21,14 +21,29 @@ namespace HostingBE\APIClientCertificateManager;
 
 use Psr\Log\LoggerInterface;
 
-use HostingBE\Api\coreAPI;
+use HostingBE\APIClientCertificateManager\coreAPI;
 
-class baseAPI extends coreAPI {
+class CertificateManager extends coreAPI {
 
 protected $codes = array('404','500','501','502','503');
 
 public function __construct(LoggerInterface $logger) {
     parent::__construct($logger);
+}
+
+/**
+ *  Execute the login command with username and password
+ */
+public function login($username, $password) {
+    $form = array('form_params' => array('username' => $username, 'password' => $password));
+    $response = $this->getUri('POST','/login',$form);
+    /** 
+    * Login succesfull save the token
+    */
+    if ($response->data->code == "200") {
+    $this->settoken($response->data->data->token);
+    }
+    return $response;
 }
 
 /**
@@ -41,10 +56,10 @@ public function common(string $method, string $command, array $params = []) :obj
         $this->checkmethod($method);
 
         if ($method == 'get') {
-        $response = $this->getUri($method, $command.$this->paramstostring($params),['headers' => ['Content-Type' => 'application/json; charset=utf-8']]);     
+        $response = $this->getUri($method, $command.$this->paramstostring($params),['headers' => ['Authorization' => 'Bearer ' . $this->gettoken()]]);     
         }
         if ($method == "post") {
-        $response = $this->getUri($method, $command, ['headers' => ['Content-Type' => 'application/json; charset=utf-8'], 'body' => json_encode($params)]);   
+        $response = $this->getUri($method, $command, ['headers' => ['Authorization' => 'Bearer ' . $this->gettoken()], 'form_params' => $params]);   
         }
         return $response;
 }
@@ -67,6 +82,19 @@ if (count($params)!= 0) {
 $paramsstr = "/".implode("/",$params);
 }
 return $paramsstr;
+}
+
+/**
+ * Get the current active token
+ */
+protected function gettoken() :string {
+    return $this->token;
+}
+/**
+* Set the current active token
+*/
+protected function settoken($token) {
+    $this->token = $token;
 }
 
 /**

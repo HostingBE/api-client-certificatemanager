@@ -34,9 +34,8 @@ abstract class coreAPI {
     protected $logger;
     protected $client;
     protected $useragent = 'Multiple options API HostingBE/1.0';
-    protected $baseUri = 'https://sandbox-wbapi.thesslstore.com/rest';
- //   protected $baseUri = 'https://api.thesslstore.com/rest';
-     const MAX_RETRIES = 3;
+    protected $baseUri = 'https://api.research.certificatemanager.net/api';
+    const MAX_RETRIES = 3;
 
 
 public function __construct(LoggerInterface $logger) {
